@@ -70,3 +70,4 @@ MainWindow::~MainWindow()
         delete m_interface;
     delete ui;
 }
+

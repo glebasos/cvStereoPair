@@ -5,7 +5,7 @@ CalibrationProcess::CalibrationProcess(QObject *parent) : QObject(parent)
 {
     this->moveToThread(&m_thread);
     m_thread.start();
-    qDebug("potok");
+
 }
 
 CalibrationProcess::~CalibrationProcess()

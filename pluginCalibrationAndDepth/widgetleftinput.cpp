@@ -19,6 +19,7 @@ WidgetLeftInput::~WidgetLeftInput()
 
 void WidgetLeftInput::showImage(cv::Mat img1)
 {
+    m_img1 = img1;
     QImage leftInput;
     QPixmap leftPixmap;
     //QImage leftInput = QImage(img1.data,img1.cols,img1.rows,static_cast<int>(img1.step),QImage::Format_RGB888);
@@ -35,4 +36,13 @@ void WidgetLeftInput::showImage(cv::Mat img1)
 //          ui->labelInput->setAlignment(Qt::AlignCenter);
 //          ui->pictureLabel->setPixmap(m_outPixmap.scaled(ui->pictureLabel->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
        }
+}
+
+void WidgetLeftInput::resizeEvent(QResizeEvent *event)
+{
+    if(event)
+    {
+        if(!(ui->labelInput->text()=="Image not found."))
+            showImage(m_img1);
+    }
 }

@@ -1,6 +1,6 @@
 #include "widgetdepthmap.h"
 #include "ui_widgetdepthmap.h"
-#include "windowdepthmap.h"
+
 
 using namespace cv;
 using namespace std;
@@ -17,9 +17,9 @@ WidgetDepthMap::~WidgetDepthMap()
     delete ui;
 }
 
-void WidgetDepthMap::depthMapping(cv::Mat img1, cv::Mat img2)
+
+void WidgetDepthMap::depthMapping(cv::Mat& img1, cv::Mat& img2)
 {
-    cout << "start testFunc" << endl;
     std::string img1_filename = "";
     std::string img2_filename = "";
     std::string intrinsic_filename = "";
@@ -174,7 +174,17 @@ void WidgetDepthMap::depthMapping(cv::Mat img1, cv::Mat img2)
     //        namedWindow("right", 1);
     //        imshow("right", img2);
     //namedWindow("disparity", 0);
-    imshow("disparity", disp8);
+  //  imshow("disparity", disp8);
+   // QImage m_outputImage = QImage(disp8.data, disp8.cols,disp8.rows, static_cast<int>(disp8.step),QImage::Format_Indexed8);
+//if(!disp8.empty())
+//{
+//    qDebug("!empty");
+
+    emit picture(disp8);
+
+
+//}
+
     printf("press any key to continue...");
     fflush(stdout);
     //waitKey();
@@ -197,7 +207,6 @@ void WidgetDepthMap::depthMapping(cv::Mat img1, cv::Mat img2)
     //    Mat xyz;
     //    reprojectImageTo3D(disp, xyz, Q, true);
     //    imshow("point Cloud", xyz);
-    cout << "end" << endl;
     //cvWaitKey(0);
 
 }
@@ -220,17 +229,22 @@ void WidgetDepthMap::saveXYZ(const char *filename, const Mat &mat)
 
 void WidgetDepthMap::depthMapOptions(int number)
 {
-     m_number=number;
+    m_number=number;
 }
+
 
 void WidgetDepthMap::on_b_startDepthMap_clicked()
 {
-    WindowDepthMap windowdepthmap;
-    windowdepthmap.setModal(true);
-    windowdepthmap.exec();
+
+    emit sendStartSignal();
 }
 
 void WidgetDepthMap::on_b_updateSet_clicked()
+{
+
+}
+
+void WidgetDepthMap::on_b_settingsDepthMap_clicked()
 {
 
 }

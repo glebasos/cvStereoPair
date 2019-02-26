@@ -25,11 +25,11 @@ WidgetFilemodeCalibration::~WidgetFilemodeCalibration()
 //select pics from folder
 void WidgetFilemodeCalibration::on_b_selectDirectory_released()
 {
-    qDebug() << "Dir pressed";
+
     m_path = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                          "/home",QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
-    //qDebug() << m_path;
+
 
     QDir directory(m_path);
     //m_files is QstringList
@@ -70,13 +70,13 @@ void WidgetFilemodeCalibration::on_b_selectDirectory_released()
 //        .toLocal8Bit().constData();
 //    }
    // qDebug() << "vector of strings " << m_pairs[0];
-    qDebug() << "vector";
+
     for (int x = 0; x != m_pairs.size(); ++x)
     {
-         cout << m_pairs[x] << "- subscripting" << endl;
+         //cout << m_pairs[x] << "- subscripting" << endl;
 //         cout << m_pairs.at(x) << "- calling at member" << endl;
     }
-    qDebug() << "stringlist   " << m_filesSorted;
+
 
     emit sendVectorString(m_pairs);
 }
@@ -123,13 +123,13 @@ void WidgetFilemodeCalibration::on_b_selectFiles_released()
 
    }
 //   qDebug() << "just a chosen files" << sorted;
-   qDebug() << "vector";
+
    for (int x = 0; x != m_pairs.size(); ++x)
    {
         cout << m_pairs[x] << "- subscripting" << endl;
 //         cout << m_pairs.at(x) << "- calling at member" << endl;
    }
-   qDebug() << "stringlist   " << m_filesSorted;
+
 
    emit sendVectorString(m_pairs);
 }

@@ -29,19 +29,26 @@ class WidgetDepthMap : public QWidget
 public:
     explicit WidgetDepthMap(QWidget *parent = nullptr);
     ~WidgetDepthMap();
+signals:
+    void picture(cv::Mat& s);
+    void sendStartSignal();
+    void sendImageToWindow(cv::Mat resDepthMap);
 
 public slots:
-    void depthMapping(cv::Mat img1, cv::Mat img2);
+    void depthMapping(cv::Mat& img1, cv::Mat& img2);
     void saveXYZ(const char* filename, const cv::Mat& mat);
     void depthMapOptions(int number);
 
+
+
 private slots:
     void on_b_startDepthMap_clicked();
-
+    void on_b_settingsDepthMap_clicked();
     void on_b_updateSet_clicked();
 
 private:
     Ui::WidgetDepthMap *ui;
+    cv::Mat m_sendImg;
     int m_number;
 };
 

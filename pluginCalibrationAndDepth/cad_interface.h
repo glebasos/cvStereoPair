@@ -9,13 +9,16 @@ class WidgetCalibration;
 class WidgetDepthMap;
 class WidgetFilemodeCalibration;
 class WidgetCalibrationMode;
-class WindowDepthMap;
 class WidgetCheckboardInformation;
 class WidgetStatus;
+
+class windowdepthmap2;
+
 class WidgetLeftInput;
 class WidgetLeftOutput;
 class WidgetRightOutput;
 class WidgetRightInput;
+
 
 class CAD_Interface : public QObject, PluginInterface
 {
@@ -49,7 +52,6 @@ private:
     WidgetDepthMap* m_widgetDepthMap = nullptr;
     WidgetFilemodeCalibration* m_widgetFilemodeCalibration = nullptr;
     WidgetCalibrationMode* m_widgetCalibrationMode = nullptr;
-    WindowDepthMap* m_WindowDepthMap =nullptr;
     WidgetCheckboardInformation* m_widgetCheckboardInformation = nullptr;
     WidgetStatus* m_widgetStatus = nullptr;
     WidgetLeftInput* m_widgetLeftInput = nullptr;
@@ -57,6 +59,8 @@ private:
     WidgetRightOutput* m_widgetRightOutput = nullptr;
     WidgetRightInput* m_widgetRightInput = nullptr;
     static QString m_pluginName;
+    windowdepthmap2* m_WindowDepthMap =nullptr;
+
 };
 
 #endif // CAD_INTERFACE_H

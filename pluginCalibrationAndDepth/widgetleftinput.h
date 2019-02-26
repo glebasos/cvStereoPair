@@ -19,9 +19,11 @@ class WidgetLeftInput : public QWidget
 public:
     explicit WidgetLeftInput(QWidget *parent = nullptr);
     ~WidgetLeftInput();
+    void resizeEvent(QResizeEvent *event);
 
 private:
     Ui::WidgetLeftInput *ui;
+    cv::Mat m_img1;
 
 public slots:
     void showImage(cv::Mat img1);

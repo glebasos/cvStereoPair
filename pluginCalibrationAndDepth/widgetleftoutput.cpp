@@ -15,6 +15,7 @@ WidgetLeftOutput::~WidgetLeftOutput()
 
 void WidgetLeftOutput::showImage(cv::Mat img1)
 {
+    m_img1 = img1;
     QImage leftInput;
     QPixmap leftPixmap;
     //QImage leftInput = QImage(img1.data,img1.cols,img1.rows,static_cast<int>(img1.step),QImage::Format_RGB888);
@@ -28,4 +29,13 @@ void WidgetLeftOutput::showImage(cv::Mat img1)
         ui->labelOutput->setAlignment(Qt::AlignCenter);
         ui->labelOutput->setPixmap(leftPixmap.scaled(ui->labelOutput->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
        }
+}
+
+void WidgetLeftOutput::resizeEvent(QResizeEvent *event)
+{
+    if(event)
+    {
+        if(!(ui->labelOutput->text()=="Image not found."))
+            showImage(m_img1);
+    }
 }

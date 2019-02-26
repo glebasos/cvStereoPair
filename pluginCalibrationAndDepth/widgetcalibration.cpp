@@ -10,7 +10,7 @@ WidgetCalibration::WidgetCalibration(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->b_calibration,&QPushButton::clicked,this,&WidgetCalibration::stereoCalibration);
-    qDebug("hello");
+
     m_boardSize.width = 9;
     m_boardSize.height = 6;
 }
@@ -104,8 +104,9 @@ void WidgetCalibration::stereoCalibration()
                 if( c == 27 || c == 'q' || c == 'Q' ) //Allow ESC to quit
                     exit(-1);
             }
-            else
-                putchar('.');
+            else {
+                //putchar('.');
+            }
             if( !found )
                 break;
             cornerSubPix(img, corners, Size(11,11), Size(-1,-1),
@@ -311,24 +312,23 @@ void WidgetCalibration::stereoCalibration()
             const string& filename = m_imagelist[i*2+k];
 
             Mat img_input = imread(filename, 0);
+
+
             Mat img = imread(goodImageList[i*2+k], 0), rimg, cimg;
             remap(img, rimg, rmap[k][0], rmap[k][1], INTER_LINEAR);
             cvtColor(rimg, cimg, COLOR_GRAY2BGR);
             Mat canvasPart = !isVerticalStereo ? canvas(Rect(w*k, 0, w, h)) : canvas(Rect(0, h*k, w, h));
             cv::resize(cimg, canvasPart, canvasPart.size(), 0, 0, INTER_AREA);
             if(k==0){
-                imgL = canvasPart;
-                //imshow("imgL", imgL);
+                imgL = cimg;
                 emit signalForInputLeft(img_input);
                 emit signalForOutput(imgL);
             } else {
-                imgR = canvasPart;
-                //imshow("imgR", imgR);
-
-                //emit signalForTestDepthMap(imgL, imgR);
-
+                imgR = cimg;
+                emit signalForInputRight(img_input);
                 emit signalForOutputRight(imgR);
-                //emit signalForTestDepthMap(imgL, imgR);
+                emit signalForTestDepthMap(imgL, imgR);
+
 
             }
 

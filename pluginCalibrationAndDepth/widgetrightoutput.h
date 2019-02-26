@@ -19,9 +19,11 @@ class WidgetRightOutput : public QWidget
 public:
     explicit WidgetRightOutput(QWidget *parent = nullptr);
     ~WidgetRightOutput();
+    void resizeEvent(QResizeEvent *event);
 
 private:
     Ui::WidgetRightOutput *ui;
+    cv::Mat m_img1;
 
 public slots:
     void showImage(cv::Mat img1);
