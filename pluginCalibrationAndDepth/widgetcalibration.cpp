@@ -50,12 +50,12 @@ void WidgetCalibration::stereoCalibration()
             const string& filename = m_imagelist[i*2+k];
 
             Mat img = imread(filename, 0);
-<<<<<<< HEAD
+
             //emit signalForInputLeft(img);
-=======
+
             emit signalForInputLeft(img);
             emit signalForInputRight(img);
->>>>>>> 86f9ef3b815804d59cfc18c3a3ffe311366ed8df
+
 
             if(img.empty())
                 break;
