@@ -10,7 +10,7 @@
 #include "widgetleftoutput.h"
 #include "widgetrightoutput.h"
 #include "widgetrightinput.h"
-
+#include "calibrationprocess.h"
 
 
 QString CAD_Interface::m_pluginName = "pluginCalibrationAndDepth";
@@ -29,23 +29,26 @@ CAD_Interface::CAD_Interface(QObject *parent) :
     m_widgetLeftOutput = new WidgetLeftOutput();
     m_widgetRightOutput = new WidgetRightOutput();
     m_widgetRightInput = new WidgetRightInput();
+    m_calibrationProcess = new CalibrationProcess();
 
-
-    connect(m_widgetCalibration,&WidgetCalibration::sendStrToStatus,m_widgetStatus,&WidgetStatus::getText);//добавление нового оповещения в статус
+    connect(m_calibrationProcess,&CalibrationProcess::sendStrToStatus,m_widgetStatus,&WidgetStatus::getText);//добавление нового оповещения в статус
     //сигнал с слайдера windowdepthmap
     //тут будут connect между виджетами
     connect(m_widgetFilemodeCalibration,&WidgetFilemodeCalibration::sendVectorString,m_widgetCalibration,&WidgetCalibration::getImagelist); // отправка изображений на обработку
 
-    connect(m_widgetCalibration,&WidgetCalibration::signalForTestDepthMap,m_widgetDepthMap,&WidgetDepthMap::depthMapping); //test
+    connect(m_calibrationProcess,&CalibrationProcess::signalForTestDepthMap,m_widgetDepthMap,&WidgetDepthMap::depthMapping); //test
     connect(m_widgetDepthMap,&WidgetDepthMap::sendStartSignal,m_WindowDepthMap,&windowdepthmap2::OpenWindow);
     connect(m_widgetDepthMap,&WidgetDepthMap::picture,m_WindowDepthMap,&windowdepthmap2::OpenPicture);
 
     //connect(m_widgetCalibration,&WidgetCalibration::signalForTestDepthMap,m_widgetDepthMap,&WidgetDepthMap::depthMapping); //test
-    connect(m_widgetCalibration,&WidgetCalibration::signalForInputLeft,m_widgetLeftInput,&WidgetLeftInput::showImage);
-    connect(m_widgetCalibration,&WidgetCalibration::signalForOutput,m_widgetLeftOutput,&WidgetLeftOutput::showImage);
-    connect(m_widgetCalibration,&WidgetCalibration::signalForOutputRight,m_widgetRightOutput,&WidgetRightOutput::showImage);
-    connect(m_widgetCalibration,&WidgetCalibration::signalForInputRight,m_widgetRightInput,&WidgetRightInput::showImage);
+    connect(m_calibrationProcess,&CalibrationProcess::signalForInputLeft,m_widgetLeftInput,&WidgetLeftInput::showImage);
+    connect(m_calibrationProcess,&CalibrationProcess::signalForOutput,m_widgetLeftOutput,&WidgetLeftOutput::showImage);
+    connect(m_calibrationProcess,&CalibrationProcess::signalForOutputRight,m_widgetRightOutput,&WidgetRightOutput::showImage);
+    connect(m_calibrationProcess,&CalibrationProcess::signalForInputRight,m_widgetRightInput,&WidgetRightInput::showImage);
+    connect(m_widgetCalibration,&WidgetCalibration::startCalibration,m_calibrationProcess,&CalibrationProcess::stereoCalibration);
 
+    connect(m_widgetFilemodeCalibration,&WidgetFilemodeCalibration::sendVectorToStartLeft,m_widgetLeftInput,&WidgetLeftInput::showImage);
+    connect(m_widgetFilemodeCalibration,&WidgetFilemodeCalibration::sendVectorToStartRight,m_widgetRightInput,&WidgetRightInput::showImage);
 }
 
 CAD_Interface::~CAD_Interface()

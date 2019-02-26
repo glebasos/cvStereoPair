@@ -44,12 +44,17 @@ signals:
     void signalForInputLeft(cv::Mat img1);
     void signalForInputRight(cv::Mat img1);
 
+    void startCalibration(const std::vector<std::string>& imagelist, cv::Size boardSize, float squareSize,
+                          bool displayCorners, bool useCalibrated, bool showRectified);
+
 
 private slots:
     void on_b_Undistortion_clicked();
     void on_cb_displayCorners_stateChanged(int arg1);
     void on_rb_Bouguet_clicked();
     void on_rb_Hartley_clicked();
+
+    void on_b_calibration_clicked();
 
 private:
     Ui::WidgetCalibration *ui;

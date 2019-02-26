@@ -19,6 +19,7 @@ class WidgetLeftOutput;
 class WidgetRightOutput;
 class WidgetRightInput;
 
+class CalibrationProcess;
 
 class CAD_Interface : public QObject, PluginInterface
 {
@@ -41,8 +42,6 @@ public:
     virtual QWidget* showRightOutputImage();
     virtual QWidget* showRightInputImage();
 
-
-
 signals:
 
 public slots:
@@ -58,6 +57,7 @@ private:
     WidgetLeftOutput* m_widgetLeftOutput = nullptr;
     WidgetRightOutput* m_widgetRightOutput = nullptr;
     WidgetRightInput* m_widgetRightInput = nullptr;
+    CalibrationProcess* m_calibrationProcess = nullptr;
     static QString m_pluginName;
     windowdepthmap2* m_WindowDepthMap =nullptr;
 

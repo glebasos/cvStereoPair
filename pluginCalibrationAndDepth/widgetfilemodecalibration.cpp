@@ -7,6 +7,8 @@
 #include <QMessageBox>
 #include <iostream>
 #include <string>
+#include <opencv2/core/core.hpp>
+
 using namespace  std;
 
 
@@ -77,6 +79,37 @@ void WidgetFilemodeCalibration::on_b_selectDirectory_released()
 //         cout << m_pairs.at(x) << "- calling at member" << endl;
     }
 
+//    const string& filename = m_pairs[0];
+
+//    cv::Mat img = cv::imread(filename, 0);
+//    emit sendVectorToStart(img);
+
+    const string& filename = m_pairs[0];
+
+    cv::Mat img_input = cv::imread(filename, 0);
+    emit sendVectorToStartLeft(img_input);
+    const string& filename_2 = m_pairs[1];
+    img_input = cv::imread(filename_2, 0);
+    emit sendVectorToStartRight(img_input);
+//    int nimages = (int)m_pairs.size()/2;
+//    for(int i = 0; i < nimages; i++ )
+//    {
+//        for(int k = 0; k < 2; k++ )
+//        {
+//            const string& filename = m_pairs[i*2+k];
+
+//            cv::Mat img_input = cv::imread(filename, 0);
+
+//            if(k==0){
+//                emit sendVectorToStartLeft(img_input);
+//            } else {
+//                emit sendVectorToStartRight(img_input);
+//            }
+//        }
+//        char c = (char)cv::waitKey();
+//        if( c == 27 || c == 'q' || c == 'Q' )
+//            break;
+//    }
 
     emit sendVectorString(m_pairs);
 }
@@ -126,7 +159,7 @@ void WidgetFilemodeCalibration::on_b_selectFiles_released()
 
    for (int x = 0; x != m_pairs.size(); ++x)
    {
-        cout << m_pairs[x] << "- subscripting" << endl;
+        //cout << m_pairs[x] << "- subscripting" << endl;
 //         cout << m_pairs.at(x) << "- calling at member" << endl;
    }
 

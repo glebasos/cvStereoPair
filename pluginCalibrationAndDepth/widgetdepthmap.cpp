@@ -1,6 +1,6 @@
 #include "widgetdepthmap.h"
 #include "ui_widgetdepthmap.h"
-
+#include <QtDebug>
 
 using namespace cv;
 using namespace std;
@@ -18,8 +18,18 @@ WidgetDepthMap::~WidgetDepthMap()
 }
 
 
-void WidgetDepthMap::depthMapping(cv::Mat& img1, cv::Mat& img2)
+void WidgetDepthMap::depthMapping(cv::Mat img1, cv::Mat img2)
 {
+    //cv::Mat img1 = _img1;
+    //cv::Mat img2 = _img2;
+    //cvtColor(img1, img1, CV_RGB2GRAY);
+    //cvtColor(img2, img2, CV_RGB2GRAY);
+
+    imshow("img1",img1);
+
+    imshow("img2",img2);
+
+
     std::string img1_filename = "";
     std::string img2_filename = "";
     std::string intrinsic_filename = "";
@@ -179,7 +189,7 @@ void WidgetDepthMap::depthMapping(cv::Mat& img1, cv::Mat& img2)
 //if(!disp8.empty())
 //{
 //    qDebug("!empty");
-
+    imshow("disp8",disp8);
     emit picture(disp8);
 
 
@@ -211,6 +221,54 @@ void WidgetDepthMap::depthMapping(cv::Mat& img1, cv::Mat& img2)
 
 }
 
+/* Второй способ DM
+ * void WidgetDepthMap::depthMapping(cv::Mat& img1, cv::Mat& img2)
+{
+    cout << "depthMapping..." << endl;
+    //    Mat im_left=imread("left01.jpg");
+    //    Mat im_right=imread("right01.jpg");
+        Mat im_left=img1;
+        Mat im_right=img2;
+        cv::Size imagesize = im_left.size();
+        cv::Mat disparity_left=cv::Mat(imagesize.height,imagesize.width,CV_16S);
+        cv::Mat disparity_right=cv::Mat(imagesize.height,imagesize.width,CV_16S);
+        cv::Mat g1,g2,disp,disp8;
+        cv::cvtColor(im_left,g1,cv::COLOR_BGR2GRAY);
+        cv::cvtColor(im_right,g2,cv::COLOR_BGR2GRAY);
+    //    cv::Ptr<cv::StereoBM> sbm = cv::StereoBM::create(0,21);
+    //    sbm->setDisp12MaxDiff(1);
+    //    sbm->setSpeckleRange(8);
+    //    sbm->setSpeckleWindowSize(9);
+    //    sbm->setUniquenessRatio(0);
+    //    sbm->setTextureThreshold(607);
+    //    sbm->setMinDisparity(0);
+    //    sbm->setPreFilterCap(30);
+    //    sbm->setPreFilterSize(7);
+    //    sbm->compute(g1,g2,disparity_left);
+
+        Ptr<StereoSGBM> sgbm = StereoSGBM::create(0,    //int minDisparity
+                                                96,     //int numDisparities
+                                                5,      //int SADWindowSize
+                                                600,    //int P1 = 0
+                                                2400,   //int P2 = 0
+                                                20,     //int disp12MaxDiff = 0
+                                                16,     //int preFilterCap = 0
+                                                1,      //int uniquenessRatio = 0
+                                                100,    //int speckleWindowSize = 0
+                                                20,     //int speckleRange = 0
+                                                true);  //bool fullDP = false
+
+        sgbm->compute(g1, g2, disparity_left);
+        normalize(disparity_left, disp8, 0, 255, CV_MINMAX, CV_8U);
+    //    cv::namedWindow("Left",CV_WINDOW_FREERATIO);
+        //cv::imshow("Left", im_left);
+    //    cv::namedWindow("Right",CV_WINDOW_FREERATIO);
+        //cv::imshow("Right", im_right);
+    //    cv::namedWindow("Depth map",CV_WINDOW_FREERATIO);
+        cv::imshow("Depth map", disp8);
+        //cv::waitKey(0);
+        emit picture(disp8);
+}*/
 void WidgetDepthMap::saveXYZ(const char *filename, const Mat &mat)
 {
     const double max_z = 1.0e4;

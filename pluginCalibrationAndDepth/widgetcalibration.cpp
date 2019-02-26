@@ -9,7 +9,7 @@ WidgetCalibration::WidgetCalibration(QWidget *parent) :
     ui(new Ui::WidgetCalibration)
 {
     ui->setupUi(this);
-    connect(ui->b_calibration,&QPushButton::clicked,this,&WidgetCalibration::stereoCalibration);
+    //connect(ui->b_calibration,&QPushButton::clicked,this,&WidgetCalibration::stereoCalibration);
 
     m_boardSize.width = 9;
     m_boardSize.height = 6;
@@ -398,4 +398,9 @@ void WidgetCalibration::on_rb_Hartley_clicked()
     m_useCalibrated = false;
     m_str = "- Hartley: on";
     emit sendStrToStatus(m_str);
+}
+
+void WidgetCalibration::on_b_calibration_clicked()
+{
+    emit startCalibration(m_imagelist, m_boardSize, m_squareSize, m_displayCorners, m_useCalibrated, m_showRectified);
 }

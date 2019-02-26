@@ -27,6 +27,7 @@ private:
 
 public slots:
     void showImage(cv::Mat img1);
+    void showStartImage(std::vector<std::string>);
 };
 
 #endif // WIDGETLEFTINPUT_H

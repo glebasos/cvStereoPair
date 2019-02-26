@@ -3,6 +3,10 @@
 
 #include <QWidget>
 #include <QDir>
+#include "opencv2/calib3d.hpp"
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/highgui.hpp"
+#include "opencv2/imgproc.hpp"
 
 namespace Ui {
 class WidgetFilemodeCalibration;
@@ -18,6 +22,8 @@ public:
 
 signals:
     void sendVectorString(std::vector<std::string>);
+    void sendVectorToStartLeft(cv::Mat);
+    void sendVectorToStartRight(cv::Mat);
 
 private slots:
     void on_b_selectDirectory_released();
